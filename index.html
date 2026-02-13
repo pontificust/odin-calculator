@@ -9,10 +9,41 @@
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png" />
     <link rel="manifest" href="assets/favicon/site.webmanifest" />
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:ital,wght@0,100..900;1,100..900&family=VT323&display=swap" rel="stylesheet">
     <title>The Odin Calculator</title>
 </head>
 <body>
-    
+    <main class="calculator">
+        <input type="text" class="calculator__screen">
+        <div class="calculator__clear-buttons">
+            <button class="calculator__allclear-button">
+                AC
+            </button>
+            <button class="calculator_clear-button">
+                C
+            </button>
+        </div>
+        <div class="calculator__buttons">
+            <button class="calculator__button" id="7">7</button>
+            <button class="calculator__button" id="8">8</button>
+            <button class="calculator__button" id="9">9</button>
+            <button class="calculator__button" id="/">/</button>
+            <button class="calculator__button" id="4">4</button>
+            <button class="calculator__button" id="5">5</button>
+            <button class="calculator__button" id="6">6</button>
+            <button class="calculator__button" id="x">x</button>
+            <button class="calculator__button" id="1">1</button>
+            <button class="calculator__button" id="2">2</button>
+            <button class="calculator__button" id="3">3</button>
+            <button class="calculator__button" id="-">-</button>
+            <button class="calculator__button" id="0">0</button>
+            <button class="calculator__button" id=".">.</button>
+            <button class="calculator__button" id="=">=</button>
+            <button class="calculator__button" id="+">+</button>
+        </div>
+    </main>
     <script src="js/main.js" type="module"></script>
 </body>
 </html>
