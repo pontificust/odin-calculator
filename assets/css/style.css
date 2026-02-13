@@ -492,6 +492,9 @@ html {
   --color-background-display: #000000;
   --color-text-display: #FF6B00;
   --color-shadow-display: #FF8C00;
+  --color-metal-button: #C0C0C0;
+  --color-metal-highlight:#FFFFFF;
+  --color-metal-reflection: #505050;
   --btn-size: 70px;
   --gap: 15px;
   --padding: 20px;
@@ -531,7 +534,11 @@ body {
     align-self: center;
     background-color: var(--color-background-display);
     border-radius: 20px;
-    font: 600 2rem 'Nixie One', system-ui;
+    font: 900 clamp(3.2rem, 10vw, 6.4rem) 'Nixie One', system-ui;
+    color: var(--color-text-display);
+    text-align: center;
+    letter-spacing: 10px;
+    text-shadow: 0 0 10px #FF8C00;
 }
 
 .calculator__switch-btn,
@@ -541,7 +548,34 @@ body {
     width: calc( 70/400 * 90vw);
     max-width: var(--btn-size);
     aspect-ratio: 1 / 1;
-    font: 600 2rem 'Cutive Mono', monospace;
+    font: 600 clamp(3.2rem, 10vw, 4rem) 'Cutive Mono', monospace;
+    color: var(--color-text-button);
+}
+
+.calculator__switch-btn {
+    border-radius: 100px;
+    background: linear-gradient(135deg, #505050, #FFFFFF, #C0C0C0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.calculator__switch-btn span {
+    background-color: var(--color-background-display);
+    border-radius: 100px;
+    width: 40px;
+    height: 40px;
+    color: var(--color-metal-highlight);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-shadow: 0 0 5px #FFFFFF, 0 0 10px #00FFFF;
+}
+
+.calculator__allclear-button,
+.calculator__clear-button {
+    background: linear-gradient(135deg, #505050, #FFFFFF, #C0C0C0);
+    border-radius: 100px;
 }
 
 .calculator__clear-buttons {
