@@ -10,24 +10,24 @@
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png" />
     <link rel="manifest" href="assets/favicon/site.webmanifest" />
     <link rel="stylesheet" href="assets/css/style.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Nixie+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Nixie+One&display=swap" rel="stylesheet">
     <title>The Odin Calculator</title>
 </head>
 <body>
     <main class="calculator">
         <div class="calculator__switch-btn_wrapper">
-            <button class="calculator__switch-btn">
+            <button class="calculator__switch-btn" id="switch">
                 <span class="material-symbols-outlined">power_settings_new</span>
             </button>
         </div>
             <input type="text" class="calculator__display">
             <div class="calculator__clear-buttons">
-                <button class="calculator__allclear-button">
+                <button class="calculator__allclear-button" id="aclear">
                     AC
                 </button>
-                <button class="calculator__clear-button">
+                <button class="calculator__clear-button" id="clear">
                     C
                 </button>
             </div>
