@@ -492,4 +492,31 @@ html {
   --color-background-display: #000000;
   --color-text-display: #FF6B00;
   --color-shadow-display: #FF8C00;
+  --btn-size: 70px;
+  --gap: 15px;
+  --padding: 20px;
+  --display-h: 100px;
+  --header-h: 60px;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.calculator__wrapper {
+    width: 90vw;
+    max-width: 520px;
+    aspect-ratio: 520 / 680;
+    max-width: 780px;
+    max-height: 1020px;
+    display: flex;
+}
+
+.calculator {
+    flex: 1 1 100%;
+    background-color: var(--color-background-main);
 }
