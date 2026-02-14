@@ -1,4 +1,4 @@
-export const calculate = () => {
+export const initCaclculator = () => {
     const calculator = document.querySelector('.calculator');
     const inputDisplay = document.querySelector('.calculator__display');
     let isOn = false;
@@ -14,7 +14,7 @@ export const calculate = () => {
     }
 
     const getInputType = (input) => {
-        return Number.parseInt(input) ? 'number' : 'operator';
+        return Number.parseInt(input) || input === 0 ? 'number' : 'operator';
     }
 
     const getButtonId = (e) => {
@@ -28,28 +28,27 @@ export const calculate = () => {
 
     const inputDigitOrOperator = () => {
         const currentInputType = getInputType(currentInput);
-        if(allowed[prevInput]){
-            console.log(allowed[prevInput], prevInput)
-
-        }
         
-        if(currentInputType === 'number'){
+        if(currentInputType === 'number' && prevInput === '.'){
+            inputDisplay.value += currentInput;
+            prevInput += currentInput;
+        } else if(currentInputType === 'number') {
             inputDisplay.value += currentInput;
             prevInput = currentInput;
-        } else {
-            const prevInputType = getInputType(prevInput);
-            if(prevInputType === 'number') {
-                inputDisplay.value += currentInput;
-                prevInput = currentInput;
-            } else if(allowed[prevInput].includes(currentInput)) {
-                console.log(prevInput)
-                inputDisplay.value += currentInput;
-                prevInput = currentInput;
-            } else {
-                return;
+         } else {
+                const prevInputType = getInputType(prevInput);
+                if(prevInputType === 'number' && prevInput > 0) {
+                    inputDisplay.value += currentInput;
+                    prevInput = currentInput;
+                } else if(allowed[prevInput]?.includes(currentInput)) {
+                    console.log(prevInput)
+                    inputDisplay.value += currentInput;
+                    prevInput = currentInput;
+                } else {
+                    return;
+                }
             }
         }
-    }
     
     const clearInput = (buttonId) => {
         const inputValue = inputDisplay.value;
@@ -58,8 +57,8 @@ export const calculate = () => {
             currentInput = '';
             prevInput = '';
         } else {
-            prevInput = inputValue.slice(inputValue.length - 1);
             inputDisplay.value = inputValue.slice(0, inputValue.length - 1);
+            prevInput = inputDisplay.value.slice(inputDisplay.value.length - 1);
         }
     }
     
@@ -85,6 +84,10 @@ export const calculate = () => {
             case 'aclear':
                 clearInput(buttonId);
                 break;
+            case '=':
+                const inputEndEvent = new CustomEvent('inputEnd');
+                document.dispatchEvent(inputEndEvent);
+                break;   
             default:
                 currentInput = buttonId;
                 inputDigitOrOperator();
