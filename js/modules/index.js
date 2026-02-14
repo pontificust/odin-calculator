@@ -1,4 +1,4 @@
 export { calculate } from "./calculate.js";
-export { operate } from "./operate.js";
+export { evaluate } from "./evaluate.js";
 export { tokenize } from "./tokenize.js";
 export { parse } from "./parse.js";
