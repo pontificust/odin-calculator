@@ -81,8 +81,12 @@ export const initCalculator = () => {
     }
 
     const keyboardHandler = (e) => {
-        let buttonId = Object.hasOwn(keyMap, e.key) ? keyMap[e.key] : e.key;
-        handleAction(buttonId);
+        const validKeys = '0123456789+-*/=.';
+        if(validKeys.includes(e.key)) {
+            handleAction(e.key);
+        } else if(Object.hasOwn(keyMap, e.key)){
+            handleAction(keyMap[e.key]);
+        }
     }
 
     const buttonsClickHandler = (e) => {
