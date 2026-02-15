@@ -7,7 +7,6 @@ export const clearInput = (buttonId) => {
         inputDisplay.value = '';
         calculatorData.currentInput = '';
         calculatorData.prevInput = '';
-        calculatorData.isFloat = false;
     } else {
         inputDisplay.value = inputValue.slice(0, inputValue.length - 1);
         calculatorData.prevInput = inputDisplay.value.slice(inputDisplay.value.length - 1);

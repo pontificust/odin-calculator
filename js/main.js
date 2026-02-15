@@ -1,7 +1,7 @@
-import { initCaclculator, evaluate, tokenize, parse, showEvaluationResult } from "./modules/index.js";
+import { initCalculator, evaluate, tokenize, parse, showEvaluationResult } from "./modules/index.js";
 
 window.addEventListener('DOMContentLoaded', () => {
-    initCaclculator();
+    initCalculator();
     const inputEndHandler = () => {
         const tokens = tokenize();
         const postfixTokens = parse(tokens);

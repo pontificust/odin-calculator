@@ -1,4 +1,4 @@
-export { initCaclculator } from "./initCaclculator.js";
+export { initCalculator } from "./initCalculator.js";
 export { evaluate } from "./evaluate.js";
 export { tokenize } from "./tokenize.js";
 export { parse } from "./parse.js";
