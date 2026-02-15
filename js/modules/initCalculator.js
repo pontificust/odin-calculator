@@ -4,9 +4,9 @@ import { calculatorData } from "./calculatorData.js";
 export const initCalculator = () => {
     const calculator = document.querySelector('.calculator');
     const display = document.querySelector('.calculator__display');
-    const clickSound = new Audio('../../assets/audio/click_001.ogg');
-    const switchOnSound = new Audio('../../assets/audio/switchOn.mp3');
-    const switchOffSound = new Audio('../../assets/audio/switchOff.mp3');
+    const clickSound = document.querySelector('#click');
+    const switchOnSound = document.querySelector('#switchOn');
+    const switchOffSound = document.querySelector('#switchOff');
 
     const allowed = {
         '*': ['-'],
