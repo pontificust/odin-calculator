@@ -534,10 +534,16 @@ body {
     align-self: center;
     background-color: var(--color-background-display);
     border-radius: 20px;
-    font: 900 clamp(1.5rem, 10vw, 2rem) 'Nixie One', system-ui;
+    font: 900 clamp(1.5rem, 5vw, 3rem) 'Nixie One', system-ui;
     color: var(--color-text-display);
-    text-align: center;
-    letter-spacing: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 20px;
+    white-space: nowrap; 
+    overflow-x: auto; 
+    overflow-y: hidden;
+    letter-spacing: 2px;
     text-shadow: 0 0 10px #FF8C00;
 }
 

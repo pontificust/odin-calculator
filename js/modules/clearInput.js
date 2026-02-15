@@ -1,14 +1,14 @@
 import { calculatorData } from "./calculatorData.js";
 
 export const clearInput = (buttonId) => {
-    const inputDisplay = document.querySelector('.calculator__display');
-    const inputValue = inputDisplay.value;
+    const display = document.querySelector('.calculator__display');
+    const inputValue = display.textContent;
     if (buttonId === 'aclear') {
-        inputDisplay.value = '';
+        display.textContent = '';
         calculatorData.currentInput = '';
         calculatorData.prevInput = '';
     } else {
-        inputDisplay.value = inputValue.slice(0, inputValue.length - 1);
-        calculatorData.prevInput = inputDisplay.value.slice(inputDisplay.value.length - 1);
+        display.textContent = inputValue.slice(0, inputValue.length - 1);
+        calculatorData.prevInput = display.textContent.slice(display.textContent.length - 1);
     }
 }

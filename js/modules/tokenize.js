@@ -1,6 +1,6 @@
 export const tokenize = () => {
-    const inputDisplay = document.querySelector('.calculator__display');
-    const inputValue = inputDisplay.value;
+    const display = document.querySelector('.calculator__display');
+    const inputValue = display.textContent;
     const tokens = [];
     let prevToken = '';
     let number = '';

@@ -3,7 +3,7 @@ import { calculatorData } from "./calculatorData.js";
 
 export const initCalculator = () => {
     const calculator = document.querySelector('.calculator');
-    const inputDisplay = document.querySelector('.calculator__display');
+    const display = document.querySelector('.calculator__display');
     const allowed = {
         '*': ['-'],
         '/': ['-'],
@@ -27,12 +27,12 @@ export const initCalculator = () => {
     }
 
     const addInput = () => {
-        inputDisplay.value += calculatorData.currentInput;
+        display.textContent += calculatorData.currentInput;
         calculatorData.prevInput = calculatorData.currentInput;
     }
 
     const canAddDecimal = () => {
-        const currentString = inputDisplay.value;
+        const currentString = display.textContent;
         const numbers = currentString.split(/[-+*/]/);
 
         const lastNumber = numbers.at(-1);
@@ -59,6 +59,7 @@ export const initCalculator = () => {
 
         const prevType = getInputType(calculatorData.prevInput);
         if(prevType === 'number' || prevType === 'decimal') {
+            if(prevType === 'decimal' && getInputType(display.textContent.at(-2)) !== 'number') return;
             addInput();
         } else if(allowed[calculatorData.prevInput]?.includes(calculatorData.currentInput)) {
             addInput()
@@ -95,6 +96,7 @@ export const initCalculator = () => {
         } else if (calculatorData.isCalculated) {
             calculatorData.isCalculated = false;
             clearInput('aclear');
+            if(getInputType(buttonId) === 'operator' && buttonId !== '-') return;
         }
         switch (buttonId) {
             case 'switch':
