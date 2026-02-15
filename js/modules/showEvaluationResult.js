@@ -2,7 +2,8 @@ import { clearInput } from "./clearInput.js";
 import { calculatorData } from "./calculatorData.js";
 
 export const showEvaluationResult = (evaluationResult) => {
-    if(!Number.isNaN(evaluationResult) && evaluationResult) {
+    console.log(evaluationResult)
+    if(!Number.isNaN(evaluationResult) && (evaluationResult || evaluationResult === 0)) {
         const inputDisplay = document.querySelector('.calculator__display');
         clearInput('aclear');
         inputDisplay.value = evaluationResult;

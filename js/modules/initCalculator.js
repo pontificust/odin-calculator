@@ -26,14 +26,6 @@ export const initCalculator = () => {
         return 'operator';
     }
 
-    const getButtonId = (e) => {
-        let buttonId = e.target.id;
-        if (buttonId === '') {
-            buttonId = e.target.closest('button')?.id;
-        }
-        return buttonId;
-    }
-
     const addInput = () => {
         inputDisplay.value += calculatorData.currentInput;
         calculatorData.prevInput = calculatorData.currentInput;
@@ -90,18 +82,20 @@ export const initCalculator = () => {
     }
 
     const buttonsClickHandler = (e) => {
-        let buttonId = getButtonId(e);
-
+        let buttonId = e.target.id;
+        if (buttonId === '') {
+            buttonId = e.target.closest('button')?.id;
+        }
+        handleAction(buttonId);
+    }
+    
+    const handleAction = (buttonId) => {
         if (buttonId !== 'switch' && !calculatorData.isOn || buttonId === '') {
             return;
         } else if (calculatorData.isCalculated) {
             calculatorData.isCalculated = false;
             clearInput('aclear');
         }
-        handleAction(buttonId);
-    }
-
-    const handleAction = (buttonId) => {
         switch (buttonId) {
             case 'switch':
                 switchCalculator();
