@@ -13,7 +13,7 @@ export const initCaclculator = () => {
     }
 
     const getInputType = (input) => {
-        return Number.parseInt(input) || input === 0 ? 'number' : 'operator';
+        return isFinite(Number.parseInt(input)) ? 'number' : 'operator';
     }
 
     const getButtonId = (e) => {
@@ -33,6 +33,7 @@ export const initCaclculator = () => {
     const inputDigitOrOperator = () => {
         const currentInputType = getInputType(calculatorData.currentInput);
         
+        console.log(currentInputType)
         if(currentInputType === 'number'){
             addInput();
         } else if(currentInputType === 'number') {
@@ -69,11 +70,11 @@ export const initCaclculator = () => {
     const buttonsClickHandler = (e) => {
         let buttonId = getButtonId(e);
 
-        if(buttonId !== 'switch' && !calculatorData.isOn || buttonId === ''
-            || calculatorData.isCalculated) {
+        if(buttonId !== 'switch' && !calculatorData.isOn || buttonId === '') {
+            return;
+        } else if(calculatorData.isCalculated) {
             calculatorData.isCalculated = false;
             clearInput('aclear');    
-            return;
         }
 
         switch(buttonId) {
@@ -87,7 +88,6 @@ export const initCaclculator = () => {
             case '=':
                 const inputEndEvent = new CustomEvent('inputEnd');
                 document.dispatchEvent(inputEndEvent);
-                
                 break;    
             default:
                 calculatorData.currentInput = buttonId;
