@@ -74,11 +74,12 @@ export const initCalculator = () => {
     }
 
     const keyboardHandler = (e) => {
-        const validKeys = '0123456789+-*/=.';
-        if(validKeys.includes(e.key)) {
-            handleAction(e.key);
-        } else if(Object.hasOwn(keyMap, e.key)){
-            handleAction(keyMap[e.key]);
+        const isValidChar = '0123456789+-*/=.'.includes(e.key);
+        const isMapped = Object.hasOwn(keyMap, e.key);
+        if(isValidChar || isMapped) {
+            e.preventDefault();
+            const buttonId = isMapped ? keyMap[e.key] : e.key;
+            handleAction(buttonId);
         }
     }
 
@@ -91,7 +92,7 @@ export const initCalculator = () => {
     }
     
     const handleAction = (buttonId) => {
-        if (buttonId !== 'switch' && !calculatorData.isOn || buttonId === '') {
+        if (buttonId !== 'switch' && !calculatorData.isOn || !buttonId) {
             return;
         } else if (calculatorData.isCalculated) {
             calculatorData.isCalculated = false;

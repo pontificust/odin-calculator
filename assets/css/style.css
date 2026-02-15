@@ -522,6 +522,8 @@ body {
     background-color: var(--color-background-main);
     border-radius: 20px;
     padding: min(calc(20/400 * 90vw), 20px);
+    box-shadow: 0px 10px 0px var(--color-shadow-main),
+    0px 20px 20px rgba(0,0,0,0.4);
 }
 
 .calculator__switch-btn_wrapper {
@@ -556,11 +558,18 @@ body {
     aspect-ratio: 1 / 1;
     font: 600 clamp(3.2rem, 10vw, 4rem) 'Cutive Mono', monospace;
     color: var(--color-text-button);
+    box-shadow: 0px 4px 0px #888;
+    transition: all 0.3s linear;
+}
+
+button:active {
+  transform: translateY(4px);
+  box-shadow: 0px 0px 0px;
 }
 
 .calculator__switch-btn {
     border-radius: 100px;
-    background: linear-gradient(135deg, #505050, #FFFFFF, #C0C0C0);
+    background: radial-gradient(circle at 30% 30%, #ffffff, #c0c0c0);
     display: flex;
     justify-content: center;
     align-items: center;
