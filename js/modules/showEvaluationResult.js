@@ -3,7 +3,6 @@ import { calculatorData } from "./calculatorData.js";
 
 export const showEvaluationResult = (evaluationResult) => {
     if(!Number.isNaN(evaluationResult) && evaluationResult) {
-        console.log(evaluationResult)
         const inputDisplay = document.querySelector('.calculator__display');
         clearInput('aclear');
         inputDisplay.value = evaluationResult;

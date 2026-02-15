@@ -10,7 +10,7 @@ export const parse = (tokens) => {
     }
 
     for(let i = 0; i < tokens.length; i += 1) {
-        if(isFinite(Number.parseInt(tokens[i]))) {
+        if(isFinite(parseFloat(tokens[i]))) {
             postfixTokens.push(tokens[i]);
             continue;
         }
