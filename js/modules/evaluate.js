@@ -1,6 +1,7 @@
 export const evaluate = (postfixTokens) => {
     const stack = [];
     let evalResult = 0;
+    let result = 0;
 
     const calculator = {
         firstOperand: 0,
@@ -29,5 +30,10 @@ export const evaluate = (postfixTokens) => {
             stack.push(evalResult);
         }
     }
-    return stack[0];
+
+    result = stack[0];
+    if(Math.abs(stack[0]) % 1 < 1) {
+        result = Math.round(stack[0] * 100) / 100;
+    }
+    return result;
 }
