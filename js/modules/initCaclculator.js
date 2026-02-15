@@ -1,16 +1,15 @@
+import { clearInput } from "./clearInput.js";
+import { calculatorData } from "./calculatorData.js";
+
 export const initCaclculator = () => {
     const calculator = document.querySelector('.calculator');
     const inputDisplay = document.querySelector('.calculator__display');
-    let isOn = false;
-    let currentInput = '';
-    let prevInput = '';
     const allowed = {
         '.': ['*', '/', '+', '-'],
-        '*': ['.', '-'],
-        '/': ['.', '-'],
-        '+': ['.'],
-        '-': ['*', '/', '.'],
-        '': ['.', '-'],
+        '*': ['-'],
+        '/': ['-'],
+        '-': ['*', '/'],
+        '': ['-'],
     }
 
     const getInputType = (input) => {
@@ -24,47 +23,45 @@ export const initCaclculator = () => {
             buttonId = e.target.classList.contains(switchSpanClassName) ? 'switch' : '';
         }
         return buttonId;
-    } 
+    }
+    
+    const addInput = () => {
+        inputDisplay.value += calculatorData.currentInput;
+        calculatorData.prevInput = calculatorData.currentInput;
+    }
 
     const inputDigitOrOperator = () => {
-        const currentInputType = getInputType(currentInput);
+        const currentInputType = getInputType(calculatorData.currentInput);
         
-        if(currentInputType === 'number' && prevInput === '.'){
-            inputDisplay.value += currentInput;
-            prevInput += currentInput;
+        if(currentInputType === 'number'){
+            addInput();
         } else if(currentInputType === 'number') {
-            inputDisplay.value += currentInput;
-            prevInput = currentInput;
+            addInput();
          } else {
-                const prevInputType = getInputType(prevInput);
-                if(prevInputType === 'number' && prevInput > 0) {
-                    inputDisplay.value += currentInput;
-                    prevInput = currentInput;
-                } else if(allowed[prevInput]?.includes(currentInput)) {
-                    console.log(prevInput)
-                    inputDisplay.value += currentInput;
-                    prevInput = currentInput;
+                const prevInputType = getInputType(calculatorData.prevInput);
+                if(prevInputType === 'number' && !calculatorData.isFloat && calculatorData.currentInput === '.') {
+                    addInput();
+                    calculatorData.isFloat = true;
+                } else if(prevInputType === 'number' && calculatorData.currentInput !== '.') {
+                    addInput();
+                    if(calculatorData.isFloat) {
+                        calculatorData.isFloat = false;
+                    }
+                } else if(allowed[calculatorData.prevInput]?.includes(calculatorData.currentInput)) {
+                    addInput();
+                    console.log(calculatorData.currentInput)
+                    if(calculatorData.isFloat) {
+                        calculatorData.isFloat = false;
+                    }
                 } else {
                     return;
                 }
             }
         }
     
-    const clearInput = (buttonId) => {
-        const inputValue = inputDisplay.value;
-        if(buttonId === 'aclear') {
-            inputDisplay.value = '';
-            currentInput = '';
-            prevInput = '';
-        } else {
-            inputDisplay.value = inputValue.slice(0, inputValue.length - 1);
-            prevInput = inputDisplay.value.slice(inputDisplay.value.length - 1);
-        }
-    }
-    
     const switchCalculator = () => {
-        isOn = isOn ? false : true;
-        if(!isOn) {
+        calculatorData.isOn = calculatorData.isOn ? false : true;
+        if(!calculatorData.isOn) {
             clearInput('aclear');
         }
     }
@@ -72,7 +69,10 @@ export const initCaclculator = () => {
     const buttonsClickHandler = (e) => {
         let buttonId = getButtonId(e);
 
-        if(buttonId !== 'switch' && !isOn || buttonId === '') {
+        if(buttonId !== 'switch' && !calculatorData.isOn || buttonId === ''
+            || calculatorData.isCalculated) {
+            calculatorData.isCalculated = false;
+            clearInput('aclear');    
             return;
         }
 
@@ -87,9 +87,10 @@ export const initCaclculator = () => {
             case '=':
                 const inputEndEvent = new CustomEvent('inputEnd');
                 document.dispatchEvent(inputEndEvent);
-                break;   
+                
+                break;    
             default:
-                currentInput = buttonId;
+                calculatorData.currentInput = buttonId;
                 inputDigitOrOperator();
                 break;
         }
