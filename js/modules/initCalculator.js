@@ -109,9 +109,9 @@ export const initCalculator = () => {
     }
 
     const playSound = (buttonId) => {
-        if(buttonId === 'switch' && !calculatorData.isOn){
+        if (buttonId === 'switch' && !calculatorData.isOn) {
             switchOnSound.play();
-        } else if(buttonId === 'switch' && calculatorData.isOn) {
+        } else if (buttonId === 'switch' && calculatorData.isOn) {
             switchOffSound.play();
         } else {
             clickSound.play();
