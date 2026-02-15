@@ -551,13 +551,14 @@ body {
 .calculator__button,
 .calculator__clear-button,
 .calculator__allclear-button {
-  width: calc(70/400 * 90vw);
+  width: calc((100% - 30px) / 4);
   max-width: var(--btn-size);
   aspect-ratio: 1 / 1;
   font: 600 clamp(3.2rem, 10vw, 4rem) 'Cutive Mono', monospace;
   color: var(--color-text-button);
   box-shadow: 0px 4px 0px #888;
   transition: all 0.3s linear;
+  background-color: var(--color-background-button);
 }
 
 button:active {
