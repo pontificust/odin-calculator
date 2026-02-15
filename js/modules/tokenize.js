@@ -6,16 +6,16 @@ export const tokenize = () => {
     let number = '';
     let token = '';
 
-    for(let i = 0; i < inputValue.length; i += 1) {
+    for (let i = 0; i < inputValue.length; i += 1) {
         prevToken = token;
         token = inputValue[i];
-        if(isFinite(Number.parseInt(token)) && i !== inputValue.length - 1 ||
-         token === '.' || i === 0 && token === '-' || token === '-' && (prevToken === '*' || prevToken === '/')) {
+        if (isFinite(Number.parseInt(token)) && i !== inputValue.length - 1 ||
+            token === '.' || i === 0 && token === '-' || token === '-' && (prevToken === '*' || prevToken === '/')) {
             number += token;
-        } else if(number !== '' && i === inputValue.length - 1) {
+        } else if (number !== '' && i === inputValue.length - 1) {
             number += token;
             tokens.push(number);
-        } else if(number !== '') {
+        } else if (number !== '') {
             tokens.push(number, token);
             number = '';
         } else {

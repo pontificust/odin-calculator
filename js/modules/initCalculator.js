@@ -4,6 +4,10 @@ import { calculatorData } from "./calculatorData.js";
 export const initCalculator = () => {
     const calculator = document.querySelector('.calculator');
     const display = document.querySelector('.calculator__display');
+    const clickSound = new Audio('../../assets/audio/click_001.ogg');
+    const switchOnSound = new Audio('../../assets/audio/switchOn.mp3');
+    const switchOffSound = new Audio('../../assets/audio/switchOff.mp3');
+
     const allowed = {
         '*': ['-'],
         '/': ['-'],
@@ -18,9 +22,9 @@ export const initCalculator = () => {
 
     const getInputType = (input) => {
         const integers = '0123456789';
-        if(integers.includes(input)) {
+        if (integers.includes(input)) {
             return 'number';
-        } else if(input === '.') {
+        } else if (input === '.') {
             return 'decimal';
         }
         return 'operator';
@@ -36,7 +40,7 @@ export const initCalculator = () => {
         const numbers = currentString.split(/[-+*/]/);
 
         const lastNumber = numbers.at(-1);
-        if(lastNumber.includes('.')){
+        if (lastNumber.includes('.')) {
             return false;
         }
         return true;
@@ -45,38 +49,51 @@ export const initCalculator = () => {
     const inputDigitOrOperator = () => {
         const type = getInputType(calculatorData.currentInput);
 
-        if(type === 'number') {
+        if (type === 'number') {
             addInput();
             return;
         }
 
-        if(type === 'decimal') {
-            if(canAddDecimal()){
+        if (type === 'decimal') {
+            if (canAddDecimal()) {
                 addInput();
             }
             return;
         }
 
         const prevType = getInputType(calculatorData.prevInput);
-        if(prevType === 'number' || prevType === 'decimal') {
-            if(prevType === 'decimal' && getInputType(display.textContent.at(-2)) !== 'number') return;
+        if (prevType === 'number' || prevType === 'decimal') {
+            if (prevType === 'decimal' && getInputType(display.textContent.at(-2)) !== 'number') return;
             addInput();
-        } else if(allowed[calculatorData.prevInput]?.includes(calculatorData.currentInput)) {
+        } else if (allowed[calculatorData.prevInput]?.includes(calculatorData.currentInput)) {
             addInput()
         }
     }
 
     const switchCalculator = () => {
         calculatorData.isOn = calculatorData.isOn ? false : true;
+
         if (!calculatorData.isOn) {
             clearInput('aclear');
+        } else {
+            const div = document.createElement('div');
+            div.textContent = '000000';
+            div.classList.add('switch-text');
+            display.appendChild(div);
+            calculator.removeEventListener('click', buttonsClickHandler);
+            window.removeEventListener('keydown', keyboardHandler);
+            setTimeout(() => {
+                display.removeChild(div);
+                calculator.addEventListener('click', buttonsClickHandler);
+                window.addEventListener('keydown', keyboardHandler);
+            }, 3000);
         }
     }
 
     const keyboardHandler = (e) => {
         const isValidChar = '0123456789+-*/=.'.includes(e.key);
         const isMapped = Object.hasOwn(keyMap, e.key);
-        if(isValidChar || isMapped) {
+        if (isValidChar || isMapped) {
             e.preventDefault();
             const buttonId = isMapped ? keyMap[e.key] : e.key;
             handleAction(buttonId);
@@ -90,14 +107,31 @@ export const initCalculator = () => {
         }
         handleAction(buttonId);
     }
-    
+
+    const playSound = (buttonId) => {
+        if(buttonId === 'switch' && !calculatorData.isOn){
+            switchOnSound.play();
+        } else if(buttonId === 'switch' && calculatorData.isOn) {
+            switchOffSound.play();
+        } else {
+            clickSound.play();
+            calculator.removeEventListener('click', buttonsClickHandler);
+            window.removeEventListener('keydown', keyboardHandler);
+            setTimeout(() => {
+                calculator.addEventListener('click', buttonsClickHandler);
+                window.addEventListener('keydown', keyboardHandler);
+            }, 100);
+        }
+    }
+
     const handleAction = (buttonId) => {
+        playSound(buttonId);
         if (buttonId !== 'switch' && !calculatorData.isOn || !buttonId) {
             return;
         } else if (calculatorData.isCalculated) {
             calculatorData.isCalculated = false;
             clearInput('aclear');
-            if(getInputType(buttonId) === 'operator' && buttonId !== '-') return;
+            if (getInputType(buttonId) === 'operator' && buttonId !== '-') return;
         }
         switch (buttonId) {
             case 'switch':

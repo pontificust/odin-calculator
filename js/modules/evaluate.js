@@ -6,22 +6,22 @@ export const evaluate = (postfixTokens) => {
     const calculator = {
         firstOperand: 0,
         secondOperand: 0,
-        '+': function() {
+        '+': function () {
             return this.firstOperand + this.secondOperand;
         },
-        '-': function() {
+        '-': function () {
             return this.firstOperand - this.secondOperand;
         },
-        '*': function() {
+        '*': function () {
             return this.firstOperand * this.secondOperand;
         },
-        '/': function() {
+        '/': function () {
             return this.firstOperand / this.secondOperand;
         },
     }
 
-    for(let i = 0; i < postfixTokens.length; i += 1) {
-        if(isFinite(parseFloat(postfixTokens[i]))) {
+    for (let i = 0; i < postfixTokens.length; i += 1) {
+        if (isFinite(parseFloat(postfixTokens[i]))) {
             stack.push(postfixTokens[i]);
         } else {
             calculator.secondOperand = parseFloat(stack.pop());
@@ -31,7 +31,7 @@ export const evaluate = (postfixTokens) => {
         }
     }
     result = stack[0];
-    if(Math.abs(stack[0]) % 1 < 1) {
+    if (Math.abs(stack[0]) % 1 < 1) {
         result = Math.round(stack[0] * 100) / 100;
     }
     return result;

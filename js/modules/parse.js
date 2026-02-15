@@ -9,20 +9,20 @@ export const parse = (tokens) => {
         '-': ['-', '+'],
     }
 
-    for(let i = 0; i < tokens.length; i += 1) {
-        if(isFinite(parseFloat(tokens[i]))) {
+    for (let i = 0; i < tokens.length; i += 1) {
+        if (isFinite(parseFloat(tokens[i]))) {
             postfixTokens.push(tokens[i]);
             continue;
         }
 
-        while(operatorOrder[operatorStack.at(-1)]?.includes(tokens[i])) {
+        while (operatorOrder[operatorStack.at(-1)]?.includes(tokens[i])) {
             postfixTokens.push(operatorStack.pop());
         }
         operatorStack.push(tokens[i]);
     }
 
-        for(let i = operatorStack.length - 1; i >= 0; i -= 1){
-            postfixTokens.push(operatorStack[i]);
-        }
+    for (let i = operatorStack.length - 1; i >= 0; i -= 1) {
+        postfixTokens.push(operatorStack[i]);
+    }
     return postfixTokens;
 } 
