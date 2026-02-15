@@ -33,7 +33,6 @@ export const initCaclculator = () => {
     const inputDigitOrOperator = () => {
         const currentInputType = getInputType(calculatorData.currentInput);
         
-        console.log(currentInputType)
         if(currentInputType === 'number'){
             addInput();
         } else if(currentInputType === 'number') {
@@ -67,6 +66,29 @@ export const initCaclculator = () => {
         }
     }
 
+    const keyboardHandler = (e) => {
+        let clickEvent = new MouseEvent('click', {
+            bubbles: true,
+        });
+        let buttonId = '';
+        switch(e.key) {
+            case 'Backspace':
+                buttonId = 'clear';
+                break;
+            case 'Escape':
+                buttonId = 'switch';
+                break;
+            case 'Enter':
+                buttonId = '=';
+                break;
+            default:
+                buttonId = e.key;
+                break;            
+        }
+        const button = document.getElementById(buttonId);
+        button?.dispatchEvent(clickEvent);
+    }
+
     const buttonsClickHandler = (e) => {
         let buttonId = getButtonId(e);
 
@@ -97,4 +119,5 @@ export const initCaclculator = () => {
     }
 
     calculator.addEventListener('click', buttonsClickHandler);
+    window.addEventListener('keydown', keyboardHandler);
 }
