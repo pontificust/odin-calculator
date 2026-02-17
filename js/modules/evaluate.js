@@ -21,7 +21,7 @@ export const evaluate = (postfixTokens) => {
     }
 
     for (let i = 0; i < postfixTokens.length; i += 1) {
-        if (isFinite(parseFloat(postfixTokens[i]))) {
+        if (!isNaN(parseFloat(postfixTokens[i]))) {
             stack.push(postfixTokens[i]);
         } else {
             calculator.secondOperand = parseFloat(stack.pop());

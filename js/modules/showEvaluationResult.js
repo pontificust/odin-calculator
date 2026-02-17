@@ -2,13 +2,14 @@ import { clearInput } from "./clearInput.js";
 import { calculatorData } from "./calculatorData.js";
 
 export const showEvaluationResult = (evaluationResult) => {
-    console.log(evaluationResult)
+    const display = document.querySelector('.calculator__display');
     if (!Number.isNaN(evaluationResult) && (evaluationResult || evaluationResult === 0)) {
-        const display = document.querySelector('.calculator__display');
         clearInput('aclear');
         display.textContent = evaluationResult;
-        calculatorData.isCalculated = true;
+        calculatorData.prevInput = evaluationResult;
     } else {
+        display.textContent = 'Error';
+        calculatorData.prevInput = 'Error';
         return;
     }
 }

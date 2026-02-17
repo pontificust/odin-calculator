@@ -10,7 +10,7 @@ export const parse = (tokens) => {
     }
 
     for (let i = 0; i < tokens.length; i += 1) {
-        if (isFinite(parseFloat(tokens[i]))) {
+        if (!isNaN(parseFloat(tokens[i]))) {
             postfixTokens.push(tokens[i]);
             continue;
         }

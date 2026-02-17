@@ -22,7 +22,7 @@ export const initCalculator = () => {
 
     const getInputType = (input) => {
         const integers = '0123456789';
-        if (integers.includes(input)) {
+        if (integers.includes(input) || typeof input === 'number') {
             return 'number';
         } else if (input === '.') {
             return 'decimal';
@@ -40,7 +40,7 @@ export const initCalculator = () => {
         const numbers = currentString.split(/[-+*/]/);
 
         const lastNumber = numbers.at(-1);
-        if (lastNumber.includes('.')) {
+        if (lastNumber.includes('.') || +lastNumber === Infinity) {
             return false;
         }
         return true;
@@ -49,24 +49,35 @@ export const initCalculator = () => {
     const inputDigitOrOperator = () => {
         const type = getInputType(calculatorData.currentInput);
 
-        if (type === 'number') {
-            addInput();
-            return;
-        }
-
-        if (type === 'decimal') {
-            if (canAddDecimal()) {
-                addInput();
+        if (calculatorData.prevInput === 'Error') {
+            if (type === 'number' || type === 'decimal') {
+                display.textContent = `${calculatorData.currentInput}`;
+                calculatorData.prevInput = calculatorData.currentInput;
+            } else if (type === 'operator') {
+                display.textContent = `0${calculatorData.currentInput}`;
+                calculatorData.prevInput = calculatorData.currentInput;
             }
             return;
-        }
+        } else {
+            if (type === 'number') {
+                addInput();
+                return;
+            }
 
-        const prevType = getInputType(calculatorData.prevInput);
-        if (prevType === 'number' || prevType === 'decimal') {
-            if (prevType === 'decimal' && getInputType(display.textContent.at(-2)) !== 'number') return;
-            addInput();
-        } else if (allowed[calculatorData.prevInput]?.includes(calculatorData.currentInput)) {
-            addInput()
+            if (type === 'decimal') {
+                if (canAddDecimal()) {
+                    addInput();
+                }
+                return;
+            }
+
+            const prevType = getInputType(calculatorData.prevInput);
+            if (prevType === 'number' || prevType === 'decimal') {
+                if (prevType === 'decimal' && getInputType(display.textContent.at(-2)) !== 'number') return;
+                addInput();
+            } else if (allowed[calculatorData.prevInput]?.includes(calculatorData.currentInput)) {
+                addInput();
+            }
         }
     }
 
@@ -128,10 +139,6 @@ export const initCalculator = () => {
         playSound(buttonId);
         if (buttonId !== 'switch' && !calculatorData.isOn || !buttonId) {
             return;
-        } else if (calculatorData.isCalculated) {
-            calculatorData.isCalculated = false;
-            clearInput('aclear');
-            if (getInputType(buttonId) === 'operator' && buttonId !== '-') return;
         }
         switch (buttonId) {
             case 'switch':
